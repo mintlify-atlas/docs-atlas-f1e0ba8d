@@ -1,0 +1,125 @@
+---
+title: Navigation
+description: The sticky navigation bar component providing links to main app sections
+---
+
+## Overview
+
+The `Navigation` component renders a sticky navigation bar at the top of the page with links to the main sections of the application. It uses Chakra UI components for styling and Next.js Link for client-side navigation.
+
+## Location
+
+`components/Navigation.js:5`
+
+## Props
+
+This component does not accept any props.
+
+## Usage
+
+<CodeGroup>
+
+```javascript Direct Usage
+import Navigation from '../components/Navigation';
+
+function MyApp() {
+  return (
+    <>
+      <Navigation />
+      {/* Rest of your content */}
+    </>
+  );
+}
+```
+
+```javascript Within Layout
+import Navigation from './Navigation';
+
+const Layout = ({ children }) => {
+  return (
+    <>
+      <Navigation />
+      <main>{children}</main>
+      <footer>
+        <p>@Copyright 2024 Flash Card App</p>
+      </footer>
+    </>
+  );
+};
+```
+
+</CodeGroup>
+
+## Navigation Links
+
+The component provides two main navigation links:
+
+<ParamField path="All flashcards" type="Link">
+  Links to the home page (`/`) to view all flashcards
+</ParamField>
+
+<ParamField path="Create Flashcard" type="Link">
+  Links to the create page (`/create`) to create a new flashcard
+</ParamField>
+
+## Styling
+
+The Navigation component uses Chakra UI's Flex layout with the following styling:
+
+- **Background**: Gray 100 (`gray.100`)
+- **Padding**: 4 units on all sides
+- **Position**: Sticky at the top of the viewport
+- **Z-Index**: 10 to ensure it appears above other content
+- **Alignment**: Space between the two navigation items
+
+## Source Code
+
+```javascript
+import React from 'react';
+import Link from 'next/link';
+import { Flex, Box, Text, Spacer } from '@chakra-ui/react';
+
+const Navigation = () => {
+  return (
+    <Flex as="nav" p="4" bg="gray.100" align="center" justify="space-between" position="sticky" top="0" zIndex="10">
+      <Box p="2">
+        <Link href="/" passHref>
+          <Text fontSize="lg" fontWeight="bold" _hover={{ cursor: 'pointer' }}>
+            All flashcards
+          </Text>
+        </Link>
+      </Box>
+      <Spacer />
+      <Box p="2">
+        <Link href="/create" passHref>
+          <Text fontSize="lg" fontWeight="bold" _hover={{ cursor: 'pointer' }}>
+            Create Flashcard
+          </Text>
+        </Link>
+      </Box>
+    </Flex>
+  );
+};
+
+export default Navigation;
+```
+
+## Features
+
+- **Sticky Positioning**: Remains visible at the top while scrolling
+- **Responsive Layout**: Uses Flexbox for proper alignment
+- **Client-Side Navigation**: Uses Next.js Link for fast page transitions
+- **Hover Effects**: Interactive cursor changes on hover
+
+<Note>
+The navigation bar uses `position="sticky"` with `top="0"`, which keeps it fixed at the top of the viewport as users scroll down the page.
+</Note>
+
+## Dependencies
+
+- **Next.js**: Uses the `next/link` component for routing
+- **Chakra UI**: Uses `Flex`, `Box`, `Text`, and `Spacer` components
+
+## Related Components
+
+- [Layout](/components/layout) - The layout wrapper that includes this navigation component

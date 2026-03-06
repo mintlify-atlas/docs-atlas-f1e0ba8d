@@ -1,0 +1,347 @@
+---
+title: 'Study Mode'
+description: 'Interactive study mode features and capabilities for effective flashcard learning'
+---
+
+## Overview
+
+Study mode is designed to provide an interactive learning experience where users can test their knowledge by viewing flashcard questions and revealing answers. While the current implementation shows a basic viewing pattern, this page outlines the architecture for a full-featured study mode.
+
+## Current Architecture
+
+The Flashcard App is built with Next.js and React, providing a solid foundation for study mode features:
+
+<CardGroup cols={2}>
+  <Card title="Next.js 14.2.3" icon="react">
+    Modern React framework with server-side rendering and optimized routing
+  </Card>
+  <Card title="Chakra UI 2.8.2" icon="palette">
+    Component library for building accessible and responsive interfaces
+  </Card>
+  <Card title="Framer Motion" icon="wand-magic-sparkles">
+    Animation library for smooth transitions and card flip effects
+  </Card>
+  <Card title="React State" icon="database">
+    State management for tracking study progress and card visibility
+  </Card>
+</CardGroup>
+
+## Study Mode Concepts
+
+### Card Flip Interaction
+
+A typical study mode implementation would hide the answer initially and reveal it on user interaction:
+
+<CodeGroup>
+
+```javascript Example Study Mode Component
+import React, { useState } from 'react';
+import { Box, Button, Text, Heading, VStack } from '@chakra-ui/react';
+import { motion } from 'framer-motion';
+
+const StudyMode = () => {
+  const flashcards = [
+    { id: 1, front: 'What is React?', back: 'A JavaScript library for building UIs' },
+    { id: 2, front: 'What is Next.js?', back: 'A React framework for production' },
+  ];
+  
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [showBack, setShowBack] = useState(false);
+  
+  const currentCard = flashcards[currentIndex];
+  
+  const handleFlip = () => {
+    setShowBack(!showBack);
+  };
+  
+  const handleNext = () => {
+    setCurrentIndex((prev) => (prev + 1) % flashcards.length);
+    setShowBack(false);
+  };
+  
+  return (
+    <VStack spacing={6} p={8}>
+      <Heading>Study Mode</Heading>
+      
+      <Box
+        as={motion.div}
+        w="400px"
+        h="300px"
+        p={6}
+        borderRadius="lg"
+        bg="white"
+        boxShadow="xl"
+        cursor="pointer"
+        onClick={handleFlip}
+        whileHover={{ scale: 1.05 }}
+      >
+        <Text fontSize="xl" textAlign="center">
+          {showBack ? currentCard.back : currentCard.front}
+        </Text>
+      </Box>
+      
+      <Button onClick={handleNext} colorScheme="blue">
+        Next Card
+      </Button>
+      
+      <Text color="gray.500">
+        Card {currentIndex + 1} of {flashcards.length}
+      </Text>
+    </VStack>
+  );
+};
+```
+
+</CodeGroup>
+
+## Key Study Features
+
+### 1. Progressive Disclosure
+
+<Note>
+  The front of the flashcard (question) is shown first, with the back (answer) hidden until the user is ready to check their knowledge.
+</Note>
+
+### 2. Navigation Controls
+
+Study mode provides intuitive controls for moving through flashcards:
+
+- **Next**: Move to the next flashcard
+- **Previous**: Return to the previous flashcard
+- **Shuffle**: Randomize the order for varied practice
+- **Reset**: Start over from the beginning
+
+### 3. Progress Tracking
+
+Track study session progress:
+
+```javascript
+const [progress, setProgress] = useState({
+  total: flashcards.length,
+  current: 0,
+  mastered: 0,
+  reviewing: 0
+});
+```
+
+## Animation with Framer Motion
+
+The app includes Framer Motion (`^11.1.9`) for smooth animations. Here's how to implement card flip animations:
+
+<Tabs>
+  <Tab title="3D Flip">
+    ### 3D Card Flip Effect
+    
+    ```javascript
+    import { motion } from 'framer-motion';
+    
+    const flipVariants = {
+      front: { rotateY: 0 },
+      back: { rotateY: 180 }
+    };
+    
+    <motion.div
+      variants={flipVariants}
+      animate={showBack ? 'back' : 'front'}
+      transition={{ duration: 0.6 }}
+      style={{ transformStyle: 'preserve-3d' }}
+    >
+      {/* Card content */}
+    </motion.div>
+    ```
+  </Tab>
+  
+  <Tab title="Fade Transition">
+    ### Simple Fade Effect
+    
+    ```javascript
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+    >
+      <Text>{showBack ? card.back : card.front}</Text>
+    </motion.div>
+    ```
+  </Tab>
+  
+  <Tab title="Slide Transition">
+    ### Slide Between Cards
+    
+    ```javascript
+    const slideVariants = {
+      enter: { x: 300, opacity: 0 },
+      center: { x: 0, opacity: 1 },
+      exit: { x: -300, opacity: 0 }
+    };
+    
+    <motion.div
+      key={currentIndex}
+      variants={slideVariants}
+      initial="enter"
+      animate="center"
+      exit="exit"
+    >
+      {/* Card content */}
+    </motion.div>
+    ```
+  </Tab>
+</Tabs>
+
+## Study Mode States
+
+A complete study mode manages multiple states:
+
+### Card State
+```javascript
+const [currentIndex, setCurrentIndex] = useState(0);
+const [showBack, setShowBack] = useState(false);
+const [direction, setDirection] = useState(0); // For swipe direction
+```
+
+### Confidence Tracking
+```javascript
+const [cardConfidence, setCardConfidence] = useState({});
+
+const markConfidence = (cardId, level) => {
+  setCardConfidence(prev => ({
+    ...prev,
+    [cardId]: level // 'easy', 'medium', 'hard'
+  }));
+};
+```
+
+## Keyboard Shortcuts
+
+Enhance study efficiency with keyboard navigation:
+
+```javascript
+useEffect(() => {
+  const handleKeyPress = (e) => {
+    switch(e.key) {
+      case ' ':
+      case 'Enter':
+        setShowBack(!showBack);
+        break;
+      case 'ArrowRight':
+        handleNext();
+        break;
+      case 'ArrowLeft':
+        handlePrevious();
+        break;
+    }
+  };
+  
+  window.addEventListener('keydown', handleKeyPress);
+  return () => window.removeEventListener('keydown', handleKeyPress);
+}, [showBack]);
+```
+
+<CardGroup cols={3}>
+  <Card title="Space / Enter" icon="circle">
+    Flip card to reveal answer
+  </Card>
+  <Card title="Right Arrow" icon="arrow-right">
+    Move to next flashcard
+  </Card>
+  <Card title="Left Arrow" icon="arrow-left">
+    Return to previous card
+  </Card>
+</CardGroup>
+
+## Integration with Existing Code
+
+The study mode would integrate with the existing flashcard data structure:
+
+```javascript
+// From pages/index.js
+const flashcards = [
+  { id: 1, front: 'test1', back: 'test2' },
+  { id: 2, front: 'test3', back: 'test4' },
+  { id: 3, front: 'test5', back: 'test6' },
+];
+```
+
+This data structure already supports study mode with:
+- **id**: Unique identifier for tracking progress
+- **front**: Question/prompt to display first
+- **back**: Answer to reveal on interaction
+
+## Spaced Repetition
+
+For advanced study features, implement spaced repetition algorithms:
+
+```javascript
+const calculateNextReview = (confidence, lastReview) => {
+  const intervals = {
+    hard: 1,      // Review in 1 day
+    medium: 3,    // Review in 3 days
+    easy: 7       // Review in 7 days
+  };
+  
+  const daysToAdd = intervals[confidence] || 1;
+  const nextReview = new Date(lastReview);
+  nextReview.setDate(nextReview.getDate() + daysToAdd);
+  
+  return nextReview;
+};
+```
+
+## Study Session Statistics
+
+Track and display study session metrics:
+
+<CodeGroup>
+
+```javascript Study Statistics Component
+import { Box, Stat, StatLabel, StatNumber, StatGroup } from '@chakra-ui/react';
+
+const StudyStats = ({ stats }) => {
+  return (
+    <StatGroup>
+      <Stat>
+        <StatLabel>Cards Studied</StatLabel>
+        <StatNumber>{stats.studied}</StatNumber>
+      </Stat>
+      
+      <Stat>
+        <StatLabel>Accuracy</StatLabel>
+        <StatNumber>{stats.accuracy}%</StatNumber>
+      </Stat>
+      
+      <Stat>
+        <StatLabel>Time Spent</StatLabel>
+        <StatNumber>{stats.timeSpent}m</StatNumber>
+      </Stat>
+    </StatGroup>
+  );
+};
+```
+
+</CodeGroup>
+
+## Best Practices
+
+<Steps>
+  <Step title="Start Simple">
+    Begin with basic flip functionality before adding complex animations
+  </Step>
+  <Step title="Add Accessibility">
+    Ensure keyboard navigation and screen reader support
+  </Step>
+  <Step title="Track Progress">
+    Save study session data to help users monitor improvement
+  </Step>
+  <Step title="Mobile Responsive">
+    Use swipe gestures for mobile devices alongside click/tap interactions
+  </Step>
+  <Step title="Performance">
+    Optimize animations and limit re-renders during study sessions
+  </Step>
+</Steps>
+
+## Related Pages
+
+- [Flashcard Creation](/features/flashcard-creation) - Create flashcards for study sessions
+- [Flashcard Viewing](/features/flashcard-viewing) - View and manage your flashcard collection

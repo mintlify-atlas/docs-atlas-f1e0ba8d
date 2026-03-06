@@ -1,0 +1,155 @@
+---
+title: 'POST /api/flashcards'
+description: 'Create a new flashcard'
+---
+
+## Endpoint
+
+```
+POST /api/flashcards
+```
+
+Creates a new flashcard with front and back content.
+
+## Request
+
+### Headers
+
+<ParamField header="Content-Type" type="string" required>
+  Must be set to `application/json`
+</ParamField>
+
+### Body Parameters
+
+<ParamField body="front" type="string" required>
+  The text to display on the front of the flashcard (the question or prompt)
+</ParamField>
+
+<ParamField body="back" type="string" required>
+  The text to display on the back of the flashcard (the answer or explanation)
+</ParamField>
+
+### Request Example
+
+<CodeGroup>
+
+```bash cURL
+curl -X POST http://localhost:3000/api/flashcards \
+  -H "Content-Type: application/json" \
+  -d '{
+    "front": "What is the capital of France?",
+    "back": "Paris"
+  }'
+```
+
+```javascript JavaScript
+fetch('http://localhost:3000/api/flashcards', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    front: 'What is the capital of France?',
+    back: 'Paris'
+  })
+})
+  .then(response => response.json())
+  .then(data => console.log(data));
+```
+
+```python Python
+import requests
+
+url = 'http://localhost:3000/api/flashcards'
+data = {
+    'front': 'What is the capital of France?',
+    'back': 'Paris'
+}
+
+response = requests.post(url, json=data)
+print(response.json())
+```
+
+</CodeGroup>
+
+## Response
+
+### Success Response (200 OK)
+
+<ResponseField name="message" type="string">
+  Confirmation message indicating the flashcard was saved successfully
+</ResponseField>
+
+**Example Response:**
+
+```json
+{
+  "message": "Flashcard saved successfully"
+}
+```
+
+### Error Responses
+
+#### 405 Method Not Allowed
+
+Returned when using an HTTP method other than POST.
+
+**Headers:**
+```
+Allow: POST
+```
+
+**Response Body:**
+```
+Method GET Not Allowed
+```
+
+## Implementation Notes
+
+<Note>
+  The current implementation logs the request body to the console for debugging purposes. In production, flashcard data should be persisted to a database.
+</Note>
+
+<Warning>
+  This endpoint does not currently validate the request body. Ensure that both `front` and `back` fields are provided in your requests.
+</Warning>
+
+## Example Use Cases
+
+### Creating a Language Learning Flashcard
+
+```json
+{
+  "front": "Hola",
+  "back": "Hello (Spanish)"
+}
+```
+
+### Creating a Programming Concept Flashcard
+
+```json
+{
+  "front": "What does API stand for?",
+  "back": "Application Programming Interface"
+}
+```
+
+### Creating a Math Flashcard
+
+```json
+{
+  "front": "What is 7 × 8?",
+  "back": "56"
+}
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="API Overview" icon="book" href="/api/overview">
+    Learn about authentication and general API usage
+  </Card>
+  <Card title="Development Guide" icon="code" href="/development/setup">
+    Set up your development environment
+  </Card>
+</CardGroup>

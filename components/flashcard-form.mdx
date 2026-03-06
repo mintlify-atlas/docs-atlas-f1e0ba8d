@@ -1,0 +1,187 @@
+---
+title: Flashcard Form
+description: The form component for creating new flashcards with front and back inputs
+---
+
+## Overview
+
+The Flashcard Form is the main component on the `/create` page that allows users to create new flashcards. It provides input fields for the front and back of a flashcard and a save button.
+
+## Location
+
+`pages/create.js:5`
+
+## Component Structure
+
+The `CreateFlashcard` component is a full page component that includes both the form logic and UI.
+
+## State Management
+
+The component manages two pieces of state:
+
+<ParamField path="front" type="string">
+  The text for the front of the flashcard
+</ParamField>
+
+<ParamField path="back" type="string">
+  The text for the back of the flashcard
+</ParamField>
+
+## Usage
+
+<CodeGroup>
+
+```javascript Page Implementation
+import React, { useState } from 'react';
+import Layout from '../components/layout';
+import { Input, Button, VStack, Heading } from '@chakra-ui/react';
+
+const CreateFlashcard = () => {
+  const [front, setFront] = useState('');
+  const [back, setBack] = useState('');
+
+  const handleSaveFlashcard = () => {
+    console.log('Front:', front);
+    console.log('Back:', back);
+  };
+
+  return (
+    <Layout>
+      <VStack spacing={4} align="stretch" m={4}>
+        <Heading>Create a New Flashcard</Heading>
+        <Input
+          placeholder="Front of the flashcard"
+          value={front}
+          onChange={(e) => setFront(e.target.value)}
+        />
+        <Input
+          placeholder="Back of the flashcard"
+          value={back}
+          onChange={(e) => setBack(e.target.value)}
+        />
+        <Button colorScheme="blue" onClick={handleSaveFlashcard}>
+          Save Flashcard
+        </Button>
+      </VStack>
+    </Layout>
+  );
+};
+
+export default CreateFlashcard;
+```
+
+</CodeGroup>
+
+## Form Fields
+
+### Front Input
+
+<ParamField path="placeholder" type="string" default="Front of the flashcard">
+  Placeholder text for the front input field
+</ParamField>
+
+The front input captures the question or prompt that will be displayed on the front of the flashcard.
+
+### Back Input
+
+<ParamField path="placeholder" type="string" default="Back of the flashcard">
+  Placeholder text for the back input field
+</ParamField>
+
+The back input captures the answer or information that will be revealed when the flashcard is flipped.
+
+## Event Handlers
+
+### handleSaveFlashcard
+
+Triggered when the Save button is clicked. Currently logs the flashcard data to the console.
+
+```javascript
+const handleSaveFlashcard = () => {
+  // TODO: Implement save functionality
+  console.log('Front:', front);
+  console.log('Back:', back);
+};
+```
+
+<Note>
+The save functionality is currently a placeholder and needs to be implemented to persist flashcards to a database or state management system.
+</Note>
+
+## Layout and Styling
+
+The form uses Chakra UI's `VStack` component for vertical layout:
+
+- **Spacing**: 4 units between elements
+- **Alignment**: Stretched to full width
+- **Margin**: 4 units on all sides
+
+### Button Styling
+
+- **Color Scheme**: Blue
+- **Action**: Calls `handleSaveFlashcard` on click
+
+## Source Code
+
+```javascript
+import React, { useState } from 'react';
+import Layout from '../components/layout';
+import { Input, Button, VStack, Heading } from '@chakra-ui/react';
+
+const CreateFlashcard = () => {
+  const [front, setFront] = useState('');
+  const [back, setBack] = useState('');
+
+  const handleSaveFlashcard = () => {
+    // TODO: Implement save functionality
+    console.log('Front:', front);
+    console.log('Back:', back);
+  };
+
+  return (
+    <Layout>
+      <VStack spacing={4} align="stretch" m={4}>
+        <Heading>Create a New Flashcard</Heading>
+        <Input
+          placeholder="Front of the flashcard"
+          value={front}
+          onChange={(e) => setFront(e.target.value)}
+        />
+        <Input
+          placeholder="Back of the flashcard"
+          value={back}
+          onChange={(e) => setBack(e.target.value)}
+        />
+        <Button colorScheme="blue" onClick={handleSaveFlashcard}>
+          Save Flashcard
+        </Button>
+      </VStack>
+    </Layout>
+  );
+};
+
+export default CreateFlashcard;
+```
+
+## Future Enhancements
+
+<Note>
+The `handleSaveFlashcard` function currently only logs to the console. Future implementations should include:
+
+- API calls to save flashcards to a backend
+- Form validation for empty fields
+- Success/error notifications
+- Navigation back to the home page after saving
+- State management integration (Redux, Context API, etc.)
+</Note>
+
+## Dependencies
+
+- **React**: Uses hooks (`useState`) for state management
+- **Chakra UI**: Uses `Input`, `Button`, `VStack`, and `Heading` components
+- **Layout**: Wraps the form in the consistent app layout
+
+## Related Components
+
+- [Layout](/components/layout) - The wrapper component used in this page
+- [Navigation](/components/navigation) - Navigation bar included via Layout

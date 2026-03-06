@@ -1,0 +1,152 @@
+---
+title: Introduction
+description: Learn about the Flashcard App, a modern web application for creating and managing digital flashcards
+---
+
+## Welcome to Flashcard App
+
+Flashcard App is a modern, intuitive web application designed to help you create, organize, and study with digital flashcards. Built with cutting-edge technologies, it provides a seamless experience for learners of all types.
+
+## What is Flashcard App?
+
+Flashcard App is a learning tool that allows you to:
+
+<CardGroup cols={2}>
+  <Card title="Create Flashcards" icon="plus">
+    Easily create custom flashcards with front and back content for any subject
+  </Card>
+  <Card title="View Your Collection" icon="layer-group">
+    Browse through all your flashcards in a clean, organized interface
+  </Card>
+  <Card title="Modern UI" icon="palette">
+    Experience a beautiful interface powered by Chakra UI components
+  </Card>
+  <Card title="Fast Performance" icon="bolt">
+    Built on Next.js for lightning-fast page loads and navigation
+  </Card>
+</CardGroup>
+
+## Tech Stack
+
+Flashcard App is built with modern, production-ready technologies:
+
+### Frontend Framework
+- **Next.js 14.2.3** - React framework with server-side rendering and routing
+- **React 18** - Modern React with hooks and concurrent features
+
+### UI & Styling
+- **Chakra UI 2.8.2** - Component library for beautiful, accessible UI
+- **Tailwind CSS 3.4.1** - Utility-first CSS framework
+- **Framer Motion 11.1.9** - Animation library for smooth interactions
+- **Emotion** - CSS-in-JS styling solution
+
+### Development Tools
+- **ESLint** - Code linting for quality assurance
+- **PostCSS** - CSS processing and optimization
+
+## Key Features
+
+### Simple Flashcard Creation
+
+The app provides an intuitive form for creating flashcards:
+
+```javascript pages/create.js
+const CreateFlashcard = () => {
+  const [front, setFront] = useState('');
+  const [back, setBack] = useState('');
+
+  const handleSaveFlashcard = () => {
+    console.log('Front:', front);
+    console.log('Back:', back);
+  };
+
+  return (
+    <VStack spacing={4} align="stretch" m={4}>
+      <Heading>Create a New Flashcard</Heading>
+      <Input
+        placeholder="Front of the flashcard"
+        value={front}
+        onChange={(e) => setFront(e.target.value)}
+      />
+      <Input
+        placeholder="Back of the flashcard"
+        value={back}
+        onChange={(e) => setBack(e.target.value)}
+      />
+      <Button colorScheme="blue" onClick={handleSaveFlashcard}>
+        Save Flashcard
+      </Button>
+    </VStack>
+  );
+};
+```
+
+### Clean Navigation
+
+The app features a sticky navigation bar built with Chakra UI components:
+
+```javascript components/Navigation.js
+const Navigation = () => {
+  return (
+    <Flex 
+      as="nav" 
+      p="4" 
+      bg="gray.100" 
+      align="center" 
+      justify="space-between" 
+      position="sticky" 
+      top="0" 
+      zIndex="10"
+    >
+      <Box p="2">
+        <Link href="/" passHref>
+          <Text fontSize="lg" fontWeight="bold">
+            All flashcards
+          </Text>
+        </Link>
+      </Box>
+      <Spacer />
+      <Box p="2">
+        <Link href="/create" passHref>
+          <Text fontSize="lg" fontWeight="bold">
+            Create Flashcard
+          </Text>
+        </Link>
+      </Box>
+    </Flex>
+  );
+};
+```
+
+### API Routes
+
+Next.js API routes handle flashcard operations:
+
+```javascript pages/api/flashcards.js
+export default function handler(req, res) {
+  if (req.method === 'POST') {
+    console.log(req.body);
+    res.status(200).json({ message: 'Flashcard saved successfully' });
+  } else {
+    res.setHeader('Allow', ['POST']);
+    res.status(405).end(`Method ${req.method} Not Allowed`);
+  }
+}
+```
+
+<Note>
+The app is currently in development mode with placeholder data. Future updates will include database integration for persistent storage.
+</Note>
+
+## Architecture Overview
+
+The application follows a clean, organized structure:
+
+- **`/pages`** - Next.js page routes and API endpoints
+- **`/components`** - Reusable React components
+- **`/app`** - Next.js 14 app directory with layouts
+- **`/public`** - Static assets
+
+## Next Steps
+
+Ready to get started? Check out the [Quickstart Guide](/quickstart) to set up and run the Flashcard App on your local machine.

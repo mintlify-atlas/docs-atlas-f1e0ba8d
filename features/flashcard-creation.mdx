@@ -1,0 +1,180 @@
+---
+title: 'Flashcard Creation'
+description: 'Learn how the flashcard creation feature works in the Flashcard App'
+---
+
+## Overview
+
+The flashcard creation feature allows users to create new flashcards with a front and back side. This functionality is implemented in the `/create` page using React state management and Chakra UI components.
+
+## Component Structure
+
+The create flashcard page is located at `pages/create.js` and uses a simple form-based interface:
+
+<CodeGroup>
+
+```javascript pages/create.js
+import React, { useState } from 'react';
+import Layout from '../components/layout';
+import { Input, Button, VStack, Heading } from '@chakra-ui/react';
+
+const CreateFlashcard = () => {
+  const [front, setFront] = useState('');
+  const [back, setBack] = useState('');
+
+  const handleSaveFlashcard = () => {
+    // TODO: Implement save functionality
+    console.log('Front:', front);
+    console.log('Back:', back);
+  };
+
+  return (
+    <Layout>
+      <VStack spacing={4} align="stretch" m={4}>
+        <Heading>Create a New Flashcard</Heading>
+        <Input
+          placeholder="Front of the flashcard"
+          value={front}
+          onChange={(e) => setFront(e.target.value)}
+        />
+        <Input
+          placeholder="Back of the flashcard"
+          value={back}
+          onChange={(e) => setBack(e.target.value)}
+        />
+        <Button colorScheme="blue" onClick={handleSaveFlashcard}>
+          Save Flashcard
+        </Button>
+      </VStack>
+    </Layout>
+  );
+};
+
+export default CreateFlashcard;
+```
+
+</CodeGroup>
+
+## Key Features
+
+<CardGroup cols={2}>
+  <Card title="State Management" icon="brain">
+    Uses React's `useState` hook to manage the front and back content of flashcards
+  </Card>
+  <Card title="Form Validation" icon="check">
+    Provides real-time input handling with controlled components
+  </Card>
+  <Card title="Chakra UI Components" icon="palette">
+    Leverages VStack, Input, Button, and Heading components for a clean interface
+  </Card>
+  <Card title="Layout Integration" icon="layout">
+    Wrapped in the shared Layout component for consistent navigation
+  </Card>
+</CardGroup>
+
+## State Management
+
+The component uses two state variables to track user input:
+
+```javascript
+const [front, setFront] = useState('');
+const [back, setBack] = useState('');
+```
+
+Each input field is a controlled component, with its value bound to state:
+
+```javascript
+<Input
+  placeholder="Front of the flashcard"
+  value={front}
+  onChange={(e) => setFront(e.target.value)}
+/>
+```
+
+## Save Functionality
+
+The `handleSaveFlashcard` function is triggered when the user clicks the "Save Flashcard" button:
+
+```javascript
+const handleSaveFlashcard = () => {
+  // TODO: Implement save functionality
+  console.log('Front:', front);
+  console.log('Back:', back);
+};
+```
+
+<Note>
+  Currently, the save functionality logs the flashcard data to the console. This is designed to be extended with API integration to persist flashcards to a database.
+</Note>
+
+## API Integration
+
+The app includes an API route at `pages/api/flashcards.js` ready for flashcard persistence:
+
+```javascript pages/api/flashcards.js
+export default function handler(req, res) {
+  if (req.method === 'POST') {
+    // TODO: Implement the logic to save flashcard data
+    console.log(req.body);
+    res.status(200).json({ message: 'Flashcard saved successfully' });
+  } else {
+    res.setHeader('Allow', ['POST']);
+    res.status(405).end(`Method ${req.method} Not Allowed`);
+  }
+}
+```
+
+## UI Components
+
+### VStack Layout
+
+The form uses Chakra UI's `VStack` for vertical spacing:
+
+```javascript
+<VStack spacing={4} align="stretch" m={4}>
+  {/* Form elements */}
+</VStack>
+```
+
+- **spacing={4}**: Adds consistent spacing between elements
+- **align="stretch"**: Makes all children full width
+- **m={4}**: Adds margin around the entire stack
+
+### Input Fields
+
+Two input fields collect the flashcard content:
+
+1. **Front Input**: Captures the question or prompt
+2. **Back Input**: Captures the answer or explanation
+
+### Save Button
+
+The save button uses Chakra UI's colorScheme for consistent theming:
+
+```javascript
+<Button colorScheme="blue" onClick={handleSaveFlashcard}>
+  Save Flashcard
+</Button>
+```
+
+## Next Steps
+
+<Steps>
+  <Step title="Connect to API">
+    Integrate the `handleSaveFlashcard` function with the `/api/flashcards` endpoint using fetch or axios
+  </Step>
+  <Step title="Add Validation">
+    Implement form validation to ensure both front and back fields are filled before saving
+  </Step>
+  <Step title="Add Feedback">
+    Use Chakra UI's Toast component to provide user feedback on successful saves or errors
+  </Step>
+  <Step title="Implement Database">
+    Connect the API route to a database (MongoDB, PostgreSQL, etc.) for persistent storage
+  </Step>
+</Steps>
+
+## Related Pages
+
+- [Flashcard Viewing](/features/flashcard-viewing) - Learn how to view and display flashcards
+- [Study Mode](/features/study-mode) - Explore study mode features

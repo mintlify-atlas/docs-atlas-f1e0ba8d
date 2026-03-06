@@ -1,0 +1,96 @@
+---
+title: Layout
+description: The main layout wrapper component that provides consistent page structure with navigation and footer
+---
+
+## Overview
+
+The `Layout` component is a wrapper component that provides a consistent page structure across the application. It includes the navigation bar and footer, wrapping the main content area.
+
+## Location
+
+`components/layout.js:4`
+
+## Props
+
+<ParamField path="children" type="React.ReactNode" required>
+  The content to be rendered within the main section of the layout
+</ParamField>
+
+## Usage
+
+<CodeGroup>
+
+```javascript Basic Usage
+import Layout from '../components/layout';
+
+function MyPage() {
+  return (
+    <Layout>
+      <h1>Page Content</h1>
+      <p>Your page content goes here</p>
+    </Layout>
+  );
+}
+```
+
+```javascript With Complex Content
+import Layout from '../components/layout';
+import { VStack, Heading, Text } from '@chakra-ui/react';
+
+function MyPage() {
+  return (
+    <Layout>
+      <VStack spacing={4} align="stretch" m={4}>
+        <Heading>My Page</Heading>
+        <Text>Complex content with Chakra UI components</Text>
+      </VStack>
+    </Layout>
+  );
+}
+```
+
+</CodeGroup>
+
+## Structure
+
+The Layout component renders:
+
+1. **Navigation Bar** - The `Navigation` component at the top
+2. **Main Content Area** - A `<main>` element containing the children
+3. **Footer** - A footer with copyright information
+
+## Source Code
+
+```javascript
+import React from 'react';
+import Navigation from './Navigation';
+
+const Layout = ({ children }) => {
+  return (
+    <>
+      <Navigation />
+      <main>{children}</main>
+      <footer>
+        <p>@Copyright 2024 Flash Card App</p>
+      </footer>
+    </>
+  );
+};
+
+export default Layout;
+```
+
+## Features
+
+- **Consistent Structure**: Ensures all pages have the same navigation and footer
+- **Simple API**: Only requires passing children
+- **Flexible Content**: Accepts any React components as children
+
+<Note>
+The Layout component uses a React Fragment (`<>...</>`) as the root element, so it doesn't add any extra DOM nodes beyond the navigation, main, and footer.
+</Note>
+
+## Related Components
+
+- [Navigation](/components/navigation) - The navigation bar included in the layout

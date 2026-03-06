@@ -1,0 +1,64 @@
+---
+title: 'API Overview'
+description: 'Introduction to the Flashcard App API'
+---
+
+## Introduction
+
+The Flashcard App API provides endpoints to manage flashcards programmatically. This API follows RESTful principles and uses JSON for request and response payloads.
+
+## Base URL
+
+When running locally, the API is available at:
+
+```
+http://localhost:3000/api
+```
+
+For production deployments, replace with your deployed application URL.
+
+## Authentication
+
+Currently, the API does not require authentication. This is suitable for development and learning purposes. For production use, consider implementing authentication mechanisms such as:
+
+- API keys
+- JWT tokens
+- OAuth 2.0
+
+## Request Format
+
+All POST requests should include the `Content-Type: application/json` header and send data as JSON in the request body.
+
+## Response Format
+
+All API responses are returned in JSON format with appropriate HTTP status codes:
+
+- `200` - Success
+- `405` - Method Not Allowed
+- `500` - Internal Server Error
+
+## Error Handling
+
+When an unsupported HTTP method is used, the API returns a `405 Method Not Allowed` response with an `Allow` header indicating the supported methods.
+
+**Example Error Response:**
+
+```json
+{
+  "error": "Method GET Not Allowed"
+}
+```
+
+## Available Endpoints
+
+The API currently provides the following endpoint:
+
+- [POST /api/flashcards](/api/flashcards-endpoint) - Create a new flashcard
+
+## Rate Limiting
+
+There are currently no rate limits implemented. For production deployments, consider implementing rate limiting to prevent abuse.
+
+## Versioning
+
+The API is currently unversioned. Future versions may include versioning in the URL path (e.g., `/api/v1/flashcards`).

@@ -1,0 +1,252 @@
+---
+title: 'Flashcard Viewing'
+description: 'Understand how flashcard viewing and display works in the Flashcard App'
+---
+
+## Overview
+
+The flashcard viewing feature displays all available flashcards in a list format. This is implemented in the home page (`pages/index.js`) and serves as the main entry point for users to see their flashcard collection.
+
+## Component Implementation
+
+The home page component renders flashcards in a simple list structure:
+
+<CodeGroup>
+
+```javascript pages/index.js
+import React from 'react';
+import Layout from '../components/layout';
+
+const HomePage = () => {
+  // Example flashcards data
+  const flashcards = [
+    { id: 1, front: 'test1', back: 'test2' },
+    { id: 2, front: 'test3', back: 'test4' },
+    { id: 3, front: 'test5', back: 'test6' },
+  ];
+
+  return (
+    <Layout>
+      <div>
+        <h1>All Flashcards</h1>
+        <ul>
+          {flashcards.map((card) => (
+            <li key={card.id}>
+              <div>
+                <strong>Front:</strong> {card.front}
+              </div>
+              <div>
+                <strong>Back:</strong> {card.back}
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </Layout>
+  );
+};
+
+export default HomePage;
+```
+
+</CodeGroup>
+
+## Data Structure
+
+Each flashcard object contains three key properties:
+
+```javascript
+{
+  id: 1,           // Unique identifier
+  front: 'test1',  // Question or prompt
+  back: 'test2'    // Answer or explanation
+}
+```
+
+<Note>
+  Currently, the flashcards are stored as static data within the component. In a production environment, this would be replaced with data fetched from an API or database.
+</Note>
+
+## Rendering Logic
+
+The component uses the `map()` method to iterate over flashcards and render each one:
+
+```javascript
+{flashcards.map((card) => (
+  <li key={card.id}>
+    <div>
+      <strong>Front:</strong> {card.front}
+    </div>
+    <div>
+      <strong>Back:</strong> {card.back}
+    </div>
+  </li>
+))}
+```
+
+### Key Properties
+
+- **key={card.id}**: React requires a unique key for list items to optimize rendering
+- Each flashcard displays both front and back content simultaneously
+
+## Layout Integration
+
+The viewing page uses the shared Layout component that includes:
+
+<CodeGroup>
+
+```javascript components/layout.js
+import React from 'react';
+import Navigation from './Navigation';
+
+const Layout = ({ children }) => {
+  return (
+    <>
+      <Navigation />
+      <main>{children}</main>
+      <footer>
+        <p>@Copyright 2024 Flash Card App</p>
+      </footer>
+    </>
+  );
+};
+
+export default Layout;
+```
+
+</CodeGroup>
+
+### Navigation Component
+
+The Navigation component provides links to key pages:
+
+```javascript components/Navigation.js
+import React from 'react';
+import Link from 'next/link';
+import { Flex, Box, Text, Spacer } from '@chakra-ui/react';
+
+const Navigation = () => {
+  return (
+    <Flex as="nav" p="4" bg="gray.100" align="center" 
+          justify="space-between" position="sticky" top="0" zIndex="10">
+      <Box p="2">
+        <Link href="/" passHref>
+          <Text fontSize="lg" fontWeight="bold" _hover={{ cursor: 'pointer' }}>
+            All flashcards
+          </Text>
+        </Link>
+      </Box>
+      <Spacer />
+      <Box p="2">
+        <Link href="/create" passHref>
+          <Text fontSize="lg" fontWeight="bold" _hover={{ cursor: 'pointer' }}>
+            Create Flashcard
+          </Text>
+        </Link>
+      </Box>
+    </Flex>
+  );
+};
+```
+
+## Navigation Features
+
+<CardGroup cols={2}>
+  <Card title="Sticky Positioning" icon="thumbtack">
+    The navigation bar stays at the top of the page with `position="sticky"` and `top="0"`
+  </Card>
+  <Card title="Next.js Link Component" icon="link">
+    Uses Next.js Link for client-side navigation without page reloads
+  </Card>
+  <Card title="Responsive Spacing" icon="arrows-left-right">
+    Flexbox layout with Spacer ensures proper distribution of navigation items
+  </Card>
+  <Card title="Hover Effects" icon="hand-pointer">
+    Text links change cursor on hover for better user experience
+  </Card>
+</CardGroup>
+
+## Display Pattern
+
+The current implementation shows both sides of each flashcard simultaneously:
+
+```text
+Front: test1
+Back: test2
+```
+
+This provides a quick reference view of all flashcards but differs from a typical study mode where answers are hidden until revealed.
+
+## Enhancement Opportunities
+
+<Tabs>
+  <Tab title="Data Fetching">
+    ### Fetch from API
+    
+    Replace static data with dynamic fetching:
+    
+    ```javascript
+    const [flashcards, setFlashcards] = useState([]);
+    
+    useEffect(() => {
+      fetch('/api/flashcards')
+        .then(res => res.json())
+        .then(data => setFlashcards(data));
+    }, []);
+    ```
+  </Tab>
+  
+  <Tab title="Card Flip">
+    ### Interactive Card Flipping
+    
+    Implement a flip animation to hide the back initially:
+    
+    ```javascript
+    const [flipped, setFlipped] = useState({});
+    
+    const toggleFlip = (id) => {
+      setFlipped(prev => ({ ...prev, [id]: !prev[id] }));
+    };
+    ```
+  </Tab>
+  
+  <Tab title="Styling">
+    ### Enhanced Styling with Chakra UI
+    
+    Replace basic HTML with Chakra UI components:
+    
+    ```javascript
+    <Box>
+      <Heading mb={4}>All Flashcards</Heading>
+      <SimpleGrid columns={[1, 2, 3]} spacing={4}>
+        {flashcards.map((card) => (
+          <Card key={card.id}>
+            <CardBody>
+              <Text fontWeight="bold">Front:</Text>
+              <Text>{card.front}</Text>
+            </CardBody>
+          </Card>
+        ))}
+      </SimpleGrid>
+    </Box>
+    ```
+  </Tab>
+</Tabs>
+
+## Technology Stack
+
+The viewing feature leverages:
+
+- **Next.js**: For server-side rendering and routing
+- **React**: For component-based UI
+- **Chakra UI**: For styling and layout components (Navigation, Flex, Box, Text)
+- **Next.js Link**: For optimized client-side navigation
+
+<Note>
+  The app uses both Chakra UI and Tailwind CSS according to `package.json`, providing flexibility in styling approaches.
+</Note>
+
+## Related Pages
+
+- [Flashcard Creation](/features/flashcard-creation) - Learn how to create new flashcards
+- [Study Mode](/features/study-mode) - Explore interactive study features

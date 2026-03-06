@@ -1,97 +1,72 @@
 ---
-title: "Introduction"
-description: "Welcome to the new home for your documentation"
+title: "Welcome to Flashcard App"
+description: "A modern, Next.js-based flashcard application for creating and studying digital flashcards"
 ---
 
-## Setting up
+## What is Flashcard App?
 
-Get your documentation site up and running in minutes.
+Flashcard App is a modern web application built with Next.js that helps you create, organize, and study digital flashcards. With an intuitive interface powered by Chakra UI and Tailwind CSS, you can build custom study materials and review them efficiently.
 
-<Card
-  title="Start here"
-  icon="rocket"
-  href="/quickstart"
-  horizontal
->
-  Follow our three step quickstart guide.
-</Card>
+## Key Features
 
-## Make it yours
-
-Design a docs site that looks great and empowers your users.
-
-<Columns cols={2}>
+<CardGroup cols={2}>
   <Card
-    title="Edit locally"
-    icon="pen-to-square"
-    href="/development"
+    title="Create Flashcards"
+    icon="square-plus"
+    href="/features/flashcard-creation"
   >
-    Edit your docs locally and preview them in real time.
+    Build custom flashcards with front and back content for effective studying
   </Card>
   <Card
-    title="Customize your site"
+    title="View & Organize"
+    icon="list"
+    href="/features/flashcard-viewing"
+  >
+    Browse all your flashcards in a clean, organized interface
+  </Card>
+  <Card
+    title="Modern UI"
     icon="palette"
-    href="/essentials/settings"
+    href="/development/styling"
   >
-    Customize the design and colors of your site to match your brand.
-  </Card>
-    <Card
-    title="Set up navigation"
-    icon="map"
-    href="/essentials/navigation"
-  >
-    Organize your docs to help users find what they need and succeed with your product.
+    Responsive design with Chakra UI and Tailwind CSS components
   </Card>
   <Card
-    title="API documentation"
-    icon="terminal"
-    href="/api-reference/introduction"
-  >
-    Auto-generate API documentation from OpenAPI specifications.
-  </Card>
-</Columns>
-
-## Create beautiful pages
-
-Everything you need to create world-class documentation.
-
-<Columns cols={2}>
-  <Card
-    title="Write with MDX"
-    icon="pen-fancy"
-    href="/essentials/markdown"
-  >
-    Use MDX to style your docs pages.
-  </Card>
-  <Card
-    title="Code samples"
+    title="API-Powered"
     icon="code"
-    href="/essentials/code"
+    href="/api/flashcards-endpoint"
   >
-    Add sample code to demonstrate how to use your product.
+    RESTful API for managing flashcard data programmatically
+  </Card>
+</CardGroup>
+
+## Quick Start
+
+Get started with Flashcard App in just a few steps:
+
+<CardGroup cols={2}>
+  <Card
+    title="Quickstart Guide"
+    icon="rocket"
+    href="/quickstart"
+  >
+    Set up and run the application in minutes
   </Card>
   <Card
-    title="Images"
-    icon="image"
-    href="/essentials/images"
+    title="Development Setup"
+    icon="code"
+    href="/development/setup"
   >
-    Display images and other media.
+    Learn how to set up your development environment
   </Card>
-  <Card
-    title="Reusable snippets"
-    icon="recycle"
-    href="/essentials/reusable-snippets"
-  >
-    Write once and reuse across your docs.
-  </Card>
-</Columns>
+</CardGroup>
 
-## Need inspiration?
+## Built With
 
-<Card
-  title="See complete examples"
-  icon="stars"
-  href="https://mintlify.com/customers"
->
-  Browse our showcase of exceptional documentation sites.
-</Card>
+Flashcard App leverages modern web technologies:
+
+- **Next.js 14** - React framework with server-side rendering
+- **React 18** - Component-based UI library
+- **Chakra UI** - Accessible component library
+- **Tailwind CSS** - Utility-first CSS framework
+- **Framer Motion** - Animation library for smooth transitions

@@ -1,80 +1,280 @@
 ---
-title: "Quickstart"
-description: "Start building awesome documentation in minutes"
+title: Quickstart
+description: Get the Flashcard App running on your local machine in minutes
 ---
 
-## Get started in three steps
+## Get Up and Running
 
-Get your documentation site running locally and make your first customization.
-
-### Step 1: Set up your local environment
-
-<AccordionGroup>
-  <Accordion icon="copy" title="Clone your docs locally">
-    During the onboarding process, you created a GitHub repository with your docs content if you didn't already have one. You can find a link to this repository in your [dashboard](https://dashboard.mintlify.com).
-    
-    To clone the repository locally so that you can make and preview changes to your docs, follow the [Cloning a repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) guide in the GitHub docs.
-  </Accordion>
-  <Accordion icon="rectangle-terminal" title="Start the preview server">
-    1. Install the Mintlify CLI: `npm i -g mint`
-    2. Navigate to your docs directory and run: `mint dev`
-    3. Open `http://localhost:3000` to see your docs live!
-    
-    <Tip>Your preview updates automatically as you edit files.</Tip>
-  </Accordion>
-</AccordionGroup>
-
-### Step 2: Deploy your changes
-
-<AccordionGroup>
-  <Accordion icon="github" title="Install our GitHub app">
-    Install the Mintlify GitHub app from your [dashboard](https://dashboard.mintlify.com/settings/organization/github-app).
-    
-    Our GitHub app automatically deploys your changes to your docs site, so you don't need to manage deployments yourself.
-</Accordion>
-<Accordion icon="palette" title="Update your site name and colors">
-    For a first change, let's update the name and colors of your docs site.
-
-    1. Open `docs.json` in your editor.
-    2. Change the `"name"` field to your project name.
-    3. Update the `"colors"` to match your brand.
-    4. Save and see your changes instantly at `http://localhost:3000`.
-
-    <Tip>Try changing the primary color to see an immediate difference!</Tip>
-  </Accordion>
-</AccordionGroup>
-
-### Step 3: Go live
-
-<Accordion icon="rocket" title="Publish your docs">
-  1. Commit and push your changes.
-  2. Your docs will update and be live in moments!
-</Accordion>
-
-## Next steps
-
-Now that you have your docs running, explore these key features:
-
-<CardGroup cols={2}>
-
-<Card title="Write Content" icon="pen-to-square" href="/essentials/markdown">
-  Learn MDX syntax and start writing your documentation.
-</Card>
-
-<Card title="Customize style" icon="palette" href="/essentials/settings">
-  Make your docs match your brand perfectly.
-</Card>
-
-<Card title="Add code examples" icon="square-code" href="/essentials/code">
-  Include syntax-highlighted code blocks.
-</Card>
-
-<Card title="API documentation" icon="code" href="/api-reference/introduction">
-  Auto-generate API docs from OpenAPI specs.
-</Card>
-
-</CardGroup>
+This guide will walk you through setting up the Flashcard App on your local machine and creating your first flashcard.
 
 <Note>
-  **Need help?** See our [full documentation](https://mintlify.com/docs) or join our [community](https://mintlify.com/community).
+Make sure you have **Node.js** (version 18 or higher) and **npm** installed on your machine before proceeding.
 </Note>
+
+## Prerequisites
+
+Before you begin, ensure you have:
+
+- Node.js 18+ installed
+- npm, yarn, pnpm, or bun package manager
+- A code editor (VS Code recommended)
+- Terminal/command line access
+
+<Steps>
+  <Step title="Clone and Install Dependencies">
+    First, navigate to the flashcard-app directory and install all required dependencies:
+
+    <CodeGroup>
+      ```bash npm
+      cd flashcard-app
+      npm install
+      ```
+
+      ```bash yarn
+      cd flashcard-app
+      yarn install
+      ```
+
+      ```bash pnpm
+      cd flashcard-app
+      pnpm install
+      ```
+
+      ```bash bun
+      cd flashcard-app
+      bun install
+      ```
+    </CodeGroup>
+
+    This will install all dependencies including:
+    - Next.js 14.2.3
+    - React 18
+    - Chakra UI 2.8.2
+    - Framer Motion
+    - Tailwind CSS
+    - And more...
+
+    <Note>
+    The installation may take a few minutes depending on your internet connection.
+    </Note>
+  </Step>
+
+  <Step title="Start the Development Server">
+    Once dependencies are installed, start the Next.js development server:
+
+    <CodeGroup>
+      ```bash npm
+      npm run dev
+      ```
+
+      ```bash yarn
+      yarn dev
+      ```
+
+      ```bash pnpm
+      pnpm dev
+      ```
+
+      ```bash bun
+      bun dev
+      ```
+    </CodeGroup>
+
+    You should see output similar to:
+
+    ```bash
+    ▲ Next.js 14.2.3
+    - Local:        http://localhost:3000
+    - Network:      http://192.168.1.x:3000
+
+    ✓ Ready in 2.5s
+    ```
+
+    Open your browser and navigate to **http://localhost:3000** to see the app running.
+
+    <Note>
+    The development server supports hot reloading - any changes you make to the code will automatically refresh the page.
+    </Note>
+  </Step>
+
+  <Step title="Create Your First Flashcard">
+    Now let's create your first flashcard!
+
+    ### Navigate to the Create Page
+
+    1. In the navigation bar at the top, click on **"Create Flashcard"**
+    2. Or navigate directly to http://localhost:3000/create
+
+    ### Fill Out the Form
+
+    You'll see a form with two input fields:
+
+    ```javascript
+    <Input
+      placeholder="Front of the flashcard"
+      value={front}
+      onChange={(e) => setFront(e.target.value)}
+    />
+    <Input
+      placeholder="Back of the flashcard"
+      value={back}
+      onChange={(e) => setBack(e.target.value)}
+    />
+    ```
+
+    3. Enter the **front** content (e.g., "What is React?")
+    4. Enter the **back** content (e.g., "A JavaScript library for building user interfaces")
+
+    ### Save the Flashcard
+
+    5. Click the **"Save Flashcard"** button
+
+    The flashcard data will be logged to the browser console. You can view it by:
+    - Right-click on the page
+    - Select **"Inspect"**
+    - Click the **"Console"** tab
+
+    You should see:
+    ```
+    Front: What is React?
+    Back: A JavaScript library for building user interfaces
+    ```
+
+    <Note>
+    Currently, flashcards are logged to the console. In future versions, they will be saved to a database for persistent storage.
+    </Note>
+  </Step>
+
+  <Step title="View Your Flashcards">
+    Navigate back to the home page to view all flashcards:
+
+    1. Click **"All flashcards"** in the navigation bar
+    2. Or go to http://localhost:3000
+
+    You'll see the flashcard collection displayed:
+
+    ```javascript pages/index.js
+    const flashcards = [
+      { id: 1, front: 'test1', back: 'test2' },
+      { id: 2, front: 'test3', back: 'test4' },
+      { id: 3, front: 'test5', back: 'test6' },
+    ];
+    ```
+
+    Each flashcard shows:
+    - **Front:** The question or term
+    - **Back:** The answer or definition
+
+    <Note>
+    The current version displays example flashcards. Database integration is planned for future releases.
+    </Note>
+  </Step>
+</Steps>
+
+## Project Structure
+
+Here's an overview of the key files and directories:
+
+```
+flashcard-app/
+├── pages/
+│   ├── index.js          # Home page - displays all flashcards
+│   ├── create.js         # Create flashcard page
+│   └── api/
+│       └── flashcards.js # API route for flashcard operations
+├── components/
+│   ├── layout.js         # Main layout wrapper
+│   └── Navigation.js     # Navigation bar component
+├── app/
+│   ├── layout.js         # Root layout with metadata
+│   └── page.js           # App directory default page
+├── public/               # Static assets
+├── package.json          # Dependencies and scripts
+└── next.config.mjs       # Next.js configuration
+```
+
+## Available Scripts
+
+The app comes with several npm scripts defined in `package.json`:
+
+```json
+{
+  "scripts": {
+    "dev": "next dev",      // Start development server
+    "build": "next build",  // Build for production
+    "start": "next start",  // Start production server
+    "lint": "next lint"     // Run ESLint
+  }
+}
+```
+
+### Development
+```bash
+npm run dev
+```
+Starts the development server with hot reloading at http://localhost:3000
+
+### Production Build
+```bash
+npm run build
+npm start
+```
+Builds and starts the optimized production version
+
+### Linting
+```bash
+npm run lint
+```
+Runs ESLint to check code quality
+
+## Next Steps
+
+Now that you have the app running, you can:
+
+<CardGroup cols={2}>
+  <Card title="Explore the Code" icon="code">
+    Dive into the source code to understand how components work
+  </Card>
+  <Card title="Customize Styles" icon="paintbrush">
+    Modify Chakra UI themes and Tailwind configurations
+  </Card>
+  <Card title="Add Features" icon="puzzle-piece">
+    Implement database integration, user authentication, or study modes
+  </Card>
+  <Card title="Deploy" icon="rocket">
+    Deploy your app to Vercel or your preferred hosting platform
+  </Card>
+</CardGroup>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Port 3000 is already in use">
+    If port 3000 is already occupied, Next.js will automatically try the next available port (3001, 3002, etc.). You can also specify a custom port:
+    
+    ```bash
+    npm run dev -- -p 3001
+    ```
+  </Accordion>
+
+  <Accordion title="Module not found errors">
+    If you see module not found errors, try deleting `node_modules` and reinstalling:
+    
+    ```bash
+    rm -rf node_modules package-lock.json
+    npm install
+    ```
+  </Accordion>
+
+  <Accordion title="Styles not loading">
+    Make sure both Chakra UI and Tailwind CSS are properly configured. Check that `tailwind.config.js` and `postcss.config.mjs` exist in the root directory.
+  </Accordion>
+</AccordionGroup>
+
+## Need Help?
+
+If you encounter any issues or have questions, check the following resources:
+
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Chakra UI Documentation](https://chakra-ui.com/docs)
+- [React Documentation](https://react.dev)

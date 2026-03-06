@@ -1,0 +1,351 @@
+---
+title: 'Styling Guide'
+description: 'Learn how styling works in the Flashcard App using Chakra UI and Tailwind CSS'
+---
+
+## Overview
+
+The Flashcard App uses a hybrid styling approach combining two powerful frameworks:
+
+- **Chakra UI** - Component library for pre-built, accessible UI components
+- **Tailwind CSS** - Utility-first CSS framework for custom styling
+
+This combination provides both rapid development with Chakra components and flexibility with Tailwind utilities.
+
+## Tailwind CSS Configuration
+
+Tailwind is configured in `tailwind.config.js`:
+
+```javascript tailwind.config.js
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  theme: {
+    extend: {
+      backgroundImage: {
+        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+        "gradient-conic":
+          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      },
+    },
+  },
+  plugins: [],
+};
+```
+
+### Content Paths
+
+The `content` array tells Tailwind where to look for class names:
+- `./pages/**/*.{js,ts,jsx,tsx,mdx}` - Pages directory
+- `./components/**/*.{js,ts,jsx,tsx,mdx}` - Components directory
+- `./app/**/*.{js,ts,jsx,tsx,mdx}` - App directory (Next.js 13+)
+
+### Custom Theme Extensions
+
+The theme includes custom gradient utilities:
+- `bg-gradient-radial` - Radial gradient backgrounds
+- `bg-gradient-conic` - Conic gradient backgrounds
+
+## Global Styles
+
+Global styles are defined in `app/globals.css`:
+
+```css globals.css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+```
+
+### Key Features
+
+- **Tailwind Directives** - Imports base styles, components, and utilities
+- **CSS Variables** - Supports light and dark mode with custom properties
+- **Dark Mode** - Automatic dark mode based on system preferences
+- **Custom Utilities** - `.text-balance` for balanced text wrapping
+
+<Note>
+  The app automatically adapts to the user's system color scheme preference.
+</Note>
+
+## Chakra UI Setup
+
+Chakra UI is integrated via the following dependencies:
+
+```json package.json
+{
+  "dependencies": {
+    "@chakra-ui/react": "^2.8.2",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "framer-motion": "^11.1.9"
+  }
+}
+```
+
+### Required Dependencies
+
+- **@chakra-ui/react** - Core Chakra UI library
+- **@emotion/react** & **@emotion/styled** - Required peer dependencies for styling
+- **framer-motion** - Required for Chakra UI animations
+
+### Setting Up Chakra Provider
+
+To use Chakra UI components, wrap your app with `ChakraProvider`:
+
+```javascript app/providers.js
+'use client'
+
+import { ChakraProvider } from '@chakra-ui/react'
+
+export function Providers({ children }) {
+  return <ChakraProvider>{children}</ChakraProvider>
+}
+```
+
+Then update `app/layout.js`:
+
+```javascript app/layout.js
+import { Inter } from "next/font/google";
+import "./globals.css";
+import { Providers } from './providers';
+
+const inter = Inter({ subsets: ["latin"] });
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <body className={inter.className}>
+        <Providers>{children}</Providers>
+      </body>
+    </html>
+  );
+}
+```
+
+<Warning>
+  Chakra UI requires the `'use client'` directive in Next.js 13+ App Router since it uses React hooks.
+</Warning>
+
+## Using Tailwind Utilities
+
+### Basic Example
+
+```jsx
+export default function Card() {
+  return (
+    <div className="p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
+      <h2 className="text-2xl font-bold mb-4 text-gray-800">Flashcard</h2>
+      <p className="text-gray-600">This is a flashcard example.</p>
+    </div>
+  );
+}
+```
+
+### Responsive Design
+
+```jsx
+<div className="w-full md:w-1/2 lg:w-1/3 p-4">
+  <h1 className="text-xl md:text-2xl lg:text-3xl">Responsive Title</h1>
+</div>
+```
+
+### Custom Gradients
+
+```jsx
+<div className="bg-gradient-radial from-blue-500 to-purple-600">
+  Radial gradient background
+</div>
+```
+
+## Using Chakra UI Components
+
+### Basic Components
+
+```jsx
+import { Box, Button, Text, Stack } from '@chakra-ui/react';
+
+export default function Example() {
+  return (
+    <Box p={6} bg="white" borderRadius="lg" shadow="md">
+      <Stack spacing={4}>
+        <Text fontSize="2xl" fontWeight="bold">Chakra UI Example</Text>
+        <Button colorScheme="blue">Click Me</Button>
+      </Stack>
+    </Box>
+  );
+}
+```
+
+### Combining Chakra and Tailwind
+
+```jsx
+import { Box, Button } from '@chakra-ui/react';
+
+export default function Hybrid() {
+  return (
+    <Box className="flex items-center justify-center min-h-screen">
+      <Button 
+        colorScheme="purple" 
+        className="shadow-lg hover:shadow-xl transition-shadow"
+      >
+        Hybrid Styling
+      </Button>
+    </Box>
+  );
+}
+```
+
+<Tip>
+  Use Chakra UI for complex interactive components and Tailwind for layout and utility styles.
+</Tip>
+
+## Font Optimization
+
+The app uses Next.js font optimization with Google Fonts:
+
+```javascript app/layout.js
+import { Inter } from "next/font/google";
+
+const inter = Inter({ subsets: ["latin"] });
+```
+
+This automatically:
+- Downloads and self-hosts the font
+- Eliminates external network requests
+- Prevents layout shift
+
+## Best Practices
+
+<CardGroup cols={2}>
+  <Card title="Use Semantic Class Names" icon="code">
+    Prefer descriptive Tailwind combinations over arbitrary values
+  </Card>
+  
+  <Card title="Leverage Chakra Themes" icon="palette">
+    Use Chakra's theme system for consistent design tokens
+  </Card>
+  
+  <Card title="Responsive First" icon="mobile">
+    Design mobile-first and use responsive modifiers (md:, lg:)
+  </Card>
+  
+  <Card title="Extract Components" icon="box">
+    Create reusable components instead of repeating class strings
+  </Card>
+</CardGroup>
+
+## Adding Custom Styles
+
+### Extending Tailwind Theme
+
+Add custom colors, spacing, or utilities to `tailwind.config.js`:
+
+```javascript
+theme: {
+  extend: {
+    colors: {
+      'brand-blue': '#1E40AF',
+      'brand-purple': '#7C3AED',
+    },
+    spacing: {
+      '128': '32rem',
+    },
+  },
+}
+```
+
+### Custom Tailwind Utilities
+
+Add custom utility classes in `globals.css`:
+
+```css
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .flip-card {
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+  }
+}
+```
+
+### Customizing Chakra Theme
+
+```javascript app/theme.js
+import { extendTheme } from '@chakra-ui/react';
+
+const theme = extendTheme({
+  colors: {
+    brand: {
+      50: '#f0f9ff',
+      100: '#e0f2fe',
+      // ... more shades
+      900: '#0c4a6e',
+    },
+  },
+});
+
+export default theme;
+```
+
+Then use it in your provider:
+
+```javascript
+import theme from './theme';
+
+<ChakraProvider theme={theme}>{children}</ChakraProvider>
+```
+
+## Dark Mode
+
+The app supports automatic dark mode through CSS variables. To use Chakra's dark mode:
+
+```jsx
+import { useColorMode, Button } from '@chakra-ui/react';
+
+export default function ThemeToggle() {
+  const { colorMode, toggleColorMode } = useColorMode();
+  
+  return (
+    <Button onClick={toggleColorMode}>
+      Toggle {colorMode === 'light' ? 'Dark' : 'Light'}
+    </Button>
+  );
+}
+```
