@@ -1,0 +1,65 @@
+{
+  "projectType": "frontend",
+  "projectName": "Flashcard App",
+  "projectDescription": "A Next.js-based flashcard application for creating and studying digital flashcards with a modern UI.",
+  "theme": "almond",
+  "primaryColor": "#3182CE",
+  "lightColor": "#63B3ED",
+  "darkColor": "#2C5282",
+  "navigation": {
+    "groups": [
+      {
+        "group": "Get Started",
+        "pages": [
+          "introduction",
+          "quickstart"
+        ]
+      },
+      {
+        "group": "Core Features",
+        "pages": [
+          "features/flashcard-creation",
+          "features/flashcard-viewing",
+          "features/study-mode"
+        ]
+      },
+      {
+        "group": "Components",
+        "pages": [
+          "components/layout",
+          "components/navigation",
+          "components/flashcard-form"
+        ]
+      },
+      {
+        "group": "API Reference",
+        "pages": [
+          "api/overview",
+          "api/flashcards-endpoint"
+        ]
+      },
+      {
+        "group": "Development",
+        "pages": [
+          "development/setup",
+          "development/styling",
+          "development/deployment"
+        ]
+      }
+    ]
+  },
+  "keyFeatures": [
+    "Create custom flashcards with front and back content",
+    "View all flashcards in a clean, organized list",
+    "RESTful API endpoint for flashcard management",
+    "Responsive UI built with Chakra UI and Tailwind CSS",
+    "Next.js-powered server-side rendering"
+  ],
+  "publicApiSurface": [
+    "POST /api/flashcards",
+    "HomePage component",
+    "CreateFlashcard component",
+    "Layout component",
+    "Navigation component"
+  ]
+}
