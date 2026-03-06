@@ -1,15 +1,19 @@
 ---
 title: 'Study Mode'
-description: 'Interactive study mode features and capabilities for effective flashcard learning'
+description: 'Guide for implementing interactive study mode features for effective flashcard learning'
 ---
 
 ## Overview
 
-Study mode is designed to provide an interactive learning experience where users can test their knowledge by viewing flashcard questions and revealing answers. While the current implementation shows a basic viewing pattern, this page outlines the architecture for a full-featured study mode.
+<Warning>
+  Study mode is not currently implemented in the Flashcard App. This page provides a guide for adding this feature in the future.
+</Warning>
 
-## Current Architecture
+Study mode would provide an interactive learning experience where users can test their knowledge by viewing flashcard questions and revealing answers. Currently, the app supports [viewing all flashcards](/features/flashcard-viewing) in a static list format. This page outlines how to implement a full-featured study mode.
 
-The Flashcard App is built with Next.js and React, providing a solid foundation for study mode features:
+## Technical Foundation
+
+The Flashcard App is built with technologies that provide a solid foundation for implementing study mode features:
 
 <CardGroup cols={2}>
   <Card title="Next.js 14.2.3" icon="react">
@@ -26,11 +30,11 @@ The Flashcard App is built with Next.js and React, providing a solid foundation 
   </Card>
 </CardGroup>
 
-## Study Mode Concepts
+## Implementation Guide
 
 ### Card Flip Interaction
 
-A typical study mode implementation would hide the answer initially and reveal it on user interaction:
+To implement study mode, you would hide the answer initially and reveal it on user interaction:
 
 <CodeGroup>
 

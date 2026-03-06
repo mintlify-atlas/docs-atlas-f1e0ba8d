@@ -122,43 +122,31 @@ Chakra UI is integrated via the following dependencies:
 - **@emotion/react** & **@emotion/styled** - Required peer dependencies for styling
 - **framer-motion** - Required for Chakra UI animations
 
-### Setting Up Chakra Provider
+<Note>
+  The current implementation uses Chakra UI components directly without a provider setup. This works for basic components but some advanced features like theme customization and color mode require setting up `ChakraProvider`.
+</Note>
 
-To use Chakra UI components, wrap your app with `ChakraProvider`:
+### Setting Up Chakra Provider (Optional Enhancement)
 
-```javascript app/providers.js
-'use client'
+To unlock Chakra UI's full capabilities, you can wrap your app with `ChakraProvider`. Since this project uses the Pages Router, add the provider to `pages/_app.js`:
 
-import { ChakraProvider } from '@chakra-ui/react'
+```javascript pages/_app.js
+import { ChakraProvider } from '@chakra-ui/react';
 
-export function Providers({ children }) {
-  return <ChakraProvider>{children}</ChakraProvider>
-}
-```
-
-Then update `app/layout.js`:
-
-```javascript app/layout.js
-import { Inter } from "next/font/google";
-import "./globals.css";
-import { Providers } from './providers';
-
-const inter = Inter({ subsets: ["latin"] });
-
-export default function RootLayout({ children }) {
+function MyApp({ Component, pageProps }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <Providers>{children}</Providers>
-      </body>
-    </html>
+    <ChakraProvider>
+      <Component {...pageProps} />
+    </ChakraProvider>
   );
 }
+
+export default MyApp;
 ```
 
-<Warning>
-  Chakra UI requires the `'use client'` directive in Next.js 13+ App Router since it uses React hooks.
-</Warning>
+<Tip>
+  Adding ChakraProvider enables theme customization, color mode switching, and access to the full Chakra UI component library.
+</Tip>
 
 ## Using Tailwind Utilities
 
